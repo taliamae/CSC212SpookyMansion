@@ -31,13 +31,17 @@ public class InteractiveFiction {
 			System.out.println();
 			System.out.println("... --- ...");
 			System.out.println(here.getDescription());
+			
+			if (player.beenHere()) {
+				System.out.println("This place feels familiar...");
+			}
 
 			// Game over after print!
 			if (here.isTerminalState()) {
 				break;
 			}
 
-			// Show a user the ways out of this place.
+			// Show a user the ways out of this place. Only prints non-secret ones.
 			List<Exit> exits = here.getVisibleExits();
 
 			for (int i=0; i<exits.size(); i++) {
@@ -55,8 +59,7 @@ public class InteractiveFiction {
 			// Get the word they typed as lowercase, and no spaces.
 			// Do not uppercase action -- I have lowercased it.
 			String action = words.get(0).toLowerCase().trim();
-
-			if (action.equals("quit")) {
+			if (action.equals("quit") || action.equals("q") || action.equals("escape")) {
 				if (input.confirm("Are you sure you want to quit?")) {
 					// quit!
 					break;
@@ -64,6 +67,18 @@ public class InteractiveFiction {
 					// go to the top of the game loop!
 					continue;
 				}
+			}
+			
+			if (action.equals("help")) {
+				System.out.println("Type and enter a number "
+						+ "that corresponds with provided options. "
+						+ "Type 'quit,' 'q,' or 'escape' to quit.");
+				continue;
+			}
+			
+			//SecretExit passage = input.equals("search");
+			if (action.equals("search")) {
+				//Place.search();
 			}
 
 			// From here on out, what they typed better be a number!

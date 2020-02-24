@@ -14,6 +14,11 @@ public class Place {
 	 * This is a list of places we can get to from this place.
 	 */
 	private List<Exit> exits;
+	
+	/*
+	 * List of secret passages.
+	 */
+	private List<SecretExit> passages;
 	/**
 	 * This is the identifier of the place.
 	 */
@@ -46,6 +51,13 @@ public class Place {
 	 */
 	public void addExit(Exit exit) {
 		this.exits.add(exit);
+	}
+	/**
+	 * Create a secret exit. Only becomes available when user searches.
+	 * @param exit - the description and target of the other Place.
+	 */
+	public void addSecretExit(SecretExit passage) {
+		this.passages.add(passage);
 	}
 	
 	/**
@@ -81,7 +93,7 @@ public class Place {
 		for (Exit e : this.exits) {
 			if (!e.isSecret()) {
 				visible.add(e);
-			}
+			} //is this where i make not secret??
 		}
 		return visible;
 	}
@@ -128,6 +140,19 @@ public class Place {
 			return this.id.equals(((Place) other).id);
 		}
 		return false;
+	}
+	
+	/**
+	 * Searches through all exits.
+	 */
+	public void search() {
+		for (Exit x : exits) {
+			x.search();
+		}
+		for (SecretExit p : passages) {
+			p.search();
+		}
+		
 	}
 	
 }
