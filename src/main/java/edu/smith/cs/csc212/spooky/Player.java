@@ -16,8 +16,11 @@ public class Player {
 	 */
 	private String place;
 	
-	//The player will now remember places they have been.
+	// The player will now remember places they have been.
 	private Set<String> visited;
+	
+	// List of items the player has.
+	public Set<String> keys;
 
 	/**
 	 * A player is created at the start of a game with just an initial place.
@@ -61,4 +64,12 @@ public class Player {
 		this.markVisited();
 		this.place = place;
 	}
+	
+	public void addStuff(String item) {
+		this.keys.add(item);
+	}
+	
+	//public boolean hasStuff() {
+		//return 
+	//}
 }

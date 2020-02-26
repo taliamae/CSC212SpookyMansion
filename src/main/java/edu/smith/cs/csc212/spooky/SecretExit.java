@@ -17,14 +17,8 @@ public class SecretExit extends Exit {
 	/*
 	 * @Override Returns true if exit is secret
 	 */
-	public boolean isSecret(TextInput input) {
-		if (input.equals("search")) {
-			this.isSecret = false;
-			System.out.println("searched");
-		}
-		
-		System.out.println(isSecret);
-		return isSecret;
+	public boolean isSecret() {
+		return this.isSecret;
 	}
 	
 	

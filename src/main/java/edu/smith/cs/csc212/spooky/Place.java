@@ -14,11 +14,11 @@ public class Place {
 	 * This is a list of places we can get to from this place.
 	 */
 	private List<Exit> exits;
-	
 	/*
-	 * List of secret passages.
+	 * This is a list of items that can be found in a place.
 	 */
-	private List<SecretExit> passages;
+	public List<String> items;
+	
 	/**
 	 * This is the identifier of the place.
 	 */
@@ -43,6 +43,7 @@ public class Place {
 		this.description = description;
 		this.exits = new ArrayList<>();
 		this.terminal = terminal;
+		this.items = new ArrayList<>();
 	}
 	
 	/**
@@ -52,13 +53,11 @@ public class Place {
 	public void addExit(Exit exit) {
 		this.exits.add(exit);
 	}
-	/**
-	 * Create a secret exit. Only becomes available when user searches.
-	 * @param exit - the description and target of the other Place.
-	 */
-	public void addSecretExit(SecretExit passage) {
-		this.passages.add(passage);
+	
+	public void addItem(String item) {
+		this.items.add(item);
 	}
+
 	
 	/**
 	 * For gameplay, whether this place ends the game.
@@ -81,7 +80,17 @@ public class Place {
 	 * @return what we show to a player about this place.
 	 */
 	public String getDescription() {
-		return this.description;
+		String showToUser = this.description + "\n";;
+		for (String item : this.items) {
+			showToUser += item + "\n";
+		}
+		return showToUser;
+	} 
+	
+	public void printDescription() {
+		for (String item : this.items) {
+			System.out.println("There is a " + item);
+		}
 	}
 
 	/**
@@ -146,13 +155,9 @@ public class Place {
 	 * Searches through all exits.
 	 */
 	public void search() {
-		for (Exit x : exits) {
+		for (Exit x : this.exits) {
 			x.search();
-		}
-		for (SecretExit p : passages) {
-			p.search();
 		}
 		
 	}
-	
 }

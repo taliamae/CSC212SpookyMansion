@@ -76,9 +76,26 @@ public class InteractiveFiction {
 				continue;
 			}
 			
-			//SecretExit passage = input.equals("search");
 			if (action.equals("search")) {
-				//Place.search();
+				here.search();
+				continue;
+			}
+			
+			if (action.equals("stuff")) {
+				if (player.keys.size() > 0) {
+					System.out.println("Here is your stuff: " + player.keys);
+				} else {
+					System.out.println("You have no items.");
+				}
+				continue;
+				
+			}
+			
+			if (action.equals("take")) {
+				for (String item : here.items) {
+					player.addStuff(item);
+				}
+				continue;
 			}
 
 			// From here on out, what they typed better be a number!
@@ -117,6 +134,7 @@ public class InteractiveFiction {
 
 		// This is the game we're playing.
 		GameWorld game = new SpookyMansion();
+		//GameWorld game = new Hogwarts();
 
 		// Actually play the game.
 		runGame(input, game);

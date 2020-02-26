@@ -29,6 +29,11 @@ public class Hogwarts implements GameWorld {
 		greatHall.addExit(new Exit("grandStaircase", "Exit out of the hallway."));
 		greatHall.addExit(new Exit("caretakerOffice", "There is a brown door with scratches on it. "
 				+ "You hear mumbling coming from inside."));
+		greatHall.addItem("baguette");
+		
+		Place caretakerOffice = insert(Place.create("caretakerOffice", "A skinny old white man with a scraggly beard yells at you.\n"
+				+ "You think to yourself, you probably shouldn't be in here."));
+		caretakerOffice.addExit(new Exit("greatHall", "Go back."));
 
 		Place grandStaircase = insert(Place.create("grandStaircase", "You find yourself standing in front of a series of moving stairs.\n"
 				+ "To your left you see a gargoyle.\n" 
@@ -43,7 +48,7 @@ public class Hogwarts implements GameWorld {
 				Place.create("gargoyle", "You inspect the gargoyle. Something about it catches your eye,\n"
 						+ "but for now it just stares into your soul."));
 		gargoyle.addExit(new Exit("grandStaircase", "Go back."));
-		gargoyle.addSecretExit(new SecretExit("dumbleTower", "The gargoyle clicks and spins into the ground. A new passage opens up."));
+		gargoyle.addExit(new SecretExit("dumbleTower", "The gargoyle clicks and spins into the ground. A new passage opens up."));
 		
 		Place dumbleTower = insert(Place.terminal("dumbleTower", "You enter a magnificent office. \n" +
 		"You hear a deep and slow voice emerge from the back of the room.\n" +
@@ -78,8 +83,8 @@ public class Hogwarts implements GameWorld {
 		trainingGrounds.addExit(new Exit("middleCourtyard", "Walk around the grass."));
 		
 		Place greenhouses = insert(Place.create("greenhouses", "You are in a warm glass building filled with lots of plants."));
-		greenhouses.addExit(new Exit("traningGrounds", "Exit through shaded walkway."));
-		greenhouses.addExit(new Exit("middlecourtyard", "Exit through the front door."));
+		greenhouses.addExit(new Exit("trainingGrounds", "Exit through shaded walkway."));
+		greenhouses.addExit(new Exit("middleCourtyard", "Exit through the front door."));
 		
 		Place kitchen = insert(
 				Place.create("kitchen", "You're in a kitchen with lots of working elves. Congratulations."));

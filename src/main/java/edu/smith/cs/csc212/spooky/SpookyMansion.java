@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class SpookyMansion implements GameWorld {
 	private Map<String, Place> places = new HashMap<>();
+	
 
 	/**
 	 * Where should the player start?
@@ -30,12 +31,18 @@ public class SpookyMansion implements GameWorld {
 		entranceHall.addExit(new Exit("attic", "There are stairs leading up."));
 		entranceHall.addExit(new Exit("kitchen", "There is a red door."));
 		entranceHall.addExit(new Exit("closet", "There is a brown door."));
+		entranceHall.addItem("flower");
+		
+		Place zoo = insert(Place.create("zoo", "wtf you found a zoo."));
+		zoo.addExit(new Exit("entranceHall", "go back."));
+		zoo.addItem("bear");
 
 		String EMOJI_SKULL = "\uD83D\uDC80";
 		Place closet = insert(Place.create("closet", "On the wall is scratched a series of letters and a skull icon ("+EMOJI_SKULL+").\n"
 				+ "South.. East.. East.. North.\n" 
 				+ "What could it mean?"));
 		closet.addExit(new Exit("entranceHall", "Go back."));
+		closet.addExit(new SecretExit("zoo", "omg a zoo"));
 
 		Place basement = insert(
 				Place.create("basement", "You have found the basement of the mansion.\n" + "It is darker down here.\n"
