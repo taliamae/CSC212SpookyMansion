@@ -26,10 +26,9 @@ public class Hogwarts implements GameWorld {
 		Place greatHall = insert(
 				Place.create("greatHall", "You find yourself in a beautiful cafeteria, finishing a meal among your friends.\n"
 						+ "You finish your meal. What's your next step?"));
-		greatHall.addExit(new Exit("grandStaircase", "Exit out of the hallway."));
+		greatHall.addExit(new Exit("grandStaircase", "Exit out of the hallway and cross stone bridge."));
 		greatHall.addExit(new Exit("caretakerOffice", "There is a brown door with scratches on it. "
 				+ "You hear mumbling coming from inside."));
-		greatHall.addItem("baguette");
 		
 		Place caretakerOffice = insert(Place.create("caretakerOffice", "A skinny old white man with a scraggly beard yells at you.\n"
 				+ "You think to yourself, you probably shouldn't be in here."));
@@ -48,39 +47,53 @@ public class Hogwarts implements GameWorld {
 				Place.create("gargoyle", "You inspect the gargoyle. Something about it catches your eye,\n"
 						+ "but for now it just stares into your soul."));
 		gargoyle.addExit(new Exit("grandStaircase", "Go back."));
-		gargoyle.addExit(new SecretExit("dumbleTower", "The gargoyle clicks and spins into the ground. A new passage opens up."));
+		gargoyle.addExit(new LockedExit("dumbleTower", "Inspect.", "magic key"));
 		
-		Place dumbleTower = insert(Place.terminal("dumbleTower", "You enter a magnificent office. \n" +
+		Place dumbleTower = insert(Place.terminal("dumbleTower", "The gargoyle clicks and spins into the ground. "
+				+ "A new passage opens up. You enter a magnificent office. \n" +
 		"You hear a deep and slow voice emerge from the back of the room.\n" +
 				"Congratulations, Harry. You have found your way."));
 		
 		
 		Place defenseTower = insert(
-				Place.create("defenseTower", "I don't know what you were thinking..."));
-		defenseTower.addExit(new Exit("grandStaircase", "Keep falling."));
-		defenseTower.addExit(new Exit("hospitalWing", "Keep falling."));
+				Place.create("defenseTower", "You come upon a tall tower with seemingly dark energy."));
+		defenseTower.addItem("Broken wand");
+		defenseTower.addExit(new Exit("grandStaircase", "Go to grand staircase."));
+		defenseTower.addExit(new Exit("hospitalWing", "Exit out back door."));
 		
 		Place middleCourtyard = insert(Place.create("middleCourtyard", 
 				"You walk to the middle of a big, open field in the middle of some buildings."));
 		middleCourtyard.addExit(new Exit("grandStaircase", "Cross the stone bridge."));
-		middleCourtyard.addExit(new Exit("greenhouses", "Walk through the courtyard."));
+		middleCourtyard.addExit(new DayExit("greenhouses", "Walk through the courtyard."));
 		middleCourtyard.addExit(new Exit("trainingGrounds", "Walk around the grass."));
 		middleCourtyard.addExit(new Exit("hospitalWing", "Enter short building."));
 
 		Place hospitalWing = insert(Place.create("hospitalWing",
-				"There are cots laid out all over the room." + "It smells musty."));
+				"There are cots laid out all over the room, some with healing patients. " + "It smells musty." 
+				+ " \nA woman named Madame Pomfrey stands at attention."));
 		hospitalWing.addExit(new Exit("defenseTower", "There are stairs leading up."));
 		hospitalWing.addExit(new Exit("middleCourtyard", "Go back through the archway."));
 		hospitalWing.addExit(new Exit("clockTower", "There is a back door leading to a staircase."));
+		hospitalWing.addExit(new NightExit("dungeons", "There's some stairs leading down to a dark hall."));
+		
+		Place dungeons = insert(Place.create("dungeons", "There's a dark hall with doors leading out, but all of them are locked."));
+		dungeons.addItem("broom");
+		dungeons.addExit(new Exit("hospitalWing", "Go back."));
 		
 		Place clockTower = insert(Place.create("clockTower", "You find yourself at the top of tall building, "
 				+ "staring at a huge clock."));
 		clockTower.addExit(new Exit("hospitalWing", "Go back down the stairs."));
 
-		Place trainingGrounds = insert(Place.create("trainingGrounds", "You find yourself in a huge open field. \n"
+		Place trainingGrounds = insert(Place.create("trainingGrounds", "You find yourself in a open grass field surroundd with bleachers. \n"
 				+ "There are hoops scattered in various areas."));
 		trainingGrounds.addExit(new Exit("greenhouses", "There is a shaded walkway."));
 		trainingGrounds.addExit(new Exit("middleCourtyard", "Walk around the grass."));
+		trainingGrounds.addExit(new SecretExit("hagridHut", "There is a path leading down a long hill."));
+		
+		Place hagridHut = insert(Place.create("hagridHut", "You walk for a while, eventually stumbling upon a small straw hut.\n"
+				+ "You hear a variety of weird, slightly unsettling noises."));
+		hagridHut.addExit(new Exit("trainingGrounds", "Go back."));
+		hagridHut.addItem("magic key");
 		
 		Place greenhouses = insert(Place.create("greenhouses", "You are in a warm glass building filled with lots of plants."));
 		greenhouses.addExit(new Exit("trainingGrounds", "Exit through shaded walkway."));

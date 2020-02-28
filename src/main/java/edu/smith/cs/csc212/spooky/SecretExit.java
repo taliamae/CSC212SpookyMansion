@@ -1,6 +1,5 @@
 package edu.smith.cs.csc212.spooky;
 
-import java.util.List;
 
 public class SecretExit extends Exit {
 	
@@ -29,14 +28,5 @@ public class SecretExit extends Exit {
 		this.isSecret = false;
 	}
 	
-	/**
-	 * Can the player open this door?
-	 * @param player - the player object (and all other state)
-	 * @return true if that is OK, false if they need something special.
-	 */
-	public boolean canOpen(Player player) {
-		// DO NOT CHANGE THIS METHOD. ONLY OVERRIDE IN A SUBCLASS.
-		return false;
-	}
 
 }

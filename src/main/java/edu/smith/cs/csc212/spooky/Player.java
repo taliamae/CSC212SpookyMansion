@@ -30,6 +30,7 @@ public class Player {
 	public Player(String initialPlace) {
 		this.place = initialPlace;
 		this.visited = new HashSet<>();
+		this.keys = new HashSet<>();
 	}
 	
 	/**

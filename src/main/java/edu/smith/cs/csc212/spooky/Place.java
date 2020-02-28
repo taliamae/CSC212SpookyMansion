@@ -1,7 +1,6 @@
 package edu.smith.cs.csc212.spooky;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,7 +52,10 @@ public class Place {
 	public void addExit(Exit exit) {
 		this.exits.add(exit);
 	}
-	
+	/**
+	 * Create an item in a specific place.
+	 * @param item - what is the Item?
+	 */
 	public void addItem(String item) {
 		this.items.add(item);
 	}
@@ -82,16 +84,10 @@ public class Place {
 	public String getDescription() {
 		String showToUser = this.description + "\n";;
 		for (String item : this.items) {
-			showToUser += item + "\n";
+			showToUser += "There is a " + item + "\n";
 		}
 		return showToUser;
 	} 
-	
-	public void printDescription() {
-		for (String item : this.items) {
-			System.out.println("There is a " + item);
-		}
-	}
 
 	/**
 	 * Get a view of the exits from this Place, for navigation.
@@ -102,7 +98,7 @@ public class Place {
 		for (Exit e : this.exits) {
 			if (!e.isSecret()) {
 				visible.add(e);
-			} //is this where i make not secret??
+			}
 		}
 		return visible;
 	}

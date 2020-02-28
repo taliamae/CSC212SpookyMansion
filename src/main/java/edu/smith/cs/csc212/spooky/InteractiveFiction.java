@@ -24,13 +24,18 @@ public class InteractiveFiction {
 
 		// Play the game until quitting.
 		// This is too hard to express here, so we just use an infinite loop with breaks.
+		GameTime hour = new GameTime();
+		
 		while (true) {
 			// Print the description of where you are.
 			Place here = game.getPlace(player.getPlace());
 			
 			System.out.println();
 			System.out.println("... --- ...");
+			System.out.println("Hour: " + hour.getMilTime() + 
+					"\nTime Passed: " + hour.getTotalTime());
 			System.out.println(here.getDescription());
+			
 			
 			if (player.beenHere()) {
 				System.out.println("This place feels familiar...");
@@ -38,6 +43,7 @@ public class InteractiveFiction {
 
 			// Game over after print!
 			if (here.isTerminalState()) {
+				System.out.println("You spent a total of " + hour.getTotalTime() + " hours in the game.");
 				break;
 			}
 
@@ -46,10 +52,12 @@ public class InteractiveFiction {
 
 			for (int i=0; i<exits.size(); i++) {
 				Exit e = exits.get(i);
-				System.out.println(" "+i+". " + e.getDescription());
+				if (!e.isSecret()) {
+					System.out.println(" "+i+". " + e.getDescription());
+				}
 			}
 
-			// Figure out what the user wants to do, for now, only "quit" is special.
+			// Figure out what the user wants to do
 			List<String> words = input.getUserWords("?");
 			if (words.size() > 1) {
 				System.out.println("Only give the system 1 word at a time!");
@@ -62,25 +70,30 @@ public class InteractiveFiction {
 			if (action.equals("quit") || action.equals("q") || action.equals("escape")) {
 				if (input.confirm("Are you sure you want to quit?")) {
 					// quit!
+					System.out.println("You spent a total of " + hour.getTotalTime() + " hours in the game.");
 					break;
 				} else {
 					// go to the top of the game loop!
 					continue;
 				}
 			}
-			
+			// Displays possible actions
 			if (action.equals("help")) {
 				System.out.println("Type and enter a number "
 						+ "that corresponds with provided options. "
-						+ "Type 'quit,' 'q,' or 'escape' to quit.");
+						+ "Type 'quit,' 'q,' or 'escape' to quit."
+						+ "Type 'take' to take an item, 'search' to search for secret exits,"
+						+ " or 'stuff' to view your inventory.");
 				continue;
 			}
 			
 			if (action.equals("search")) {
 				here.search();
+				hour.incHour();
 				continue;
 			}
 			
+			//Prints player's inventory
 			if (action.equals("stuff")) {
 				if (player.keys.size() > 0) {
 					System.out.println("Here is your stuff: " + player.keys);
@@ -91,10 +104,17 @@ public class InteractiveFiction {
 				
 			}
 			
+			// Advances time by 2 hours
+			if (action.equals("rest")) {
+				hour.rest();
+			}
+			
+			// Player takes all items in room
 			if (action.equals("take")) {
 				for (String item : here.items) {
 					player.addStuff(item);
 				}
+				here.items.clear();
 				continue;
 			}
 
@@ -114,14 +134,23 @@ public class InteractiveFiction {
 
 			// Move to the room they indicated.
 			Exit destination = exits.get(exitNum);
+			// Increment time by one hour each time player moves
+			hour.incHour();
 			if (destination.canOpen(player)) {
 				player.moveTo(destination.getTarget());
-			} else {
-				// TODO: some kind of message about it being locked?
+			} 
+			else if (player.keys.contains("magic key")) {
+				player.moveTo(destination.getTarget());
 			}
+				else {
+				System.out.println("The door is locked. Come back later when you have more items.");
+			} 
+			
 		}
 
 		return player.getPlace();
+		
+		
 	}
 
 	/**
@@ -133,14 +162,15 @@ public class InteractiveFiction {
 		TextInput input = TextInput.fromArgs(args);
 
 		// This is the game we're playing.
-		GameWorld game = new SpookyMansion();
-		//GameWorld game = new Hogwarts();
+		//GameWorld game = new SpookyMansion();
+		GameWorld game = new Hogwarts();
 
 		// Actually play the game.
 		runGame(input, game);
 
 		// You get here by typing "quit" or by reaching a Terminal Place.
 		System.out.println("\n\n>>> GAME OVER <<<");
+		
 	}
 
 }
